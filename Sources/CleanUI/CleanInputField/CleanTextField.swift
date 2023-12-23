@@ -7,19 +7,8 @@
 
 import SwiftUI
 
-/** The different types of TextFields
- */
-public enum CleanTextFieldStyle {
-    
-    case standard
-    case line
-    case outline
-    case symbol(sfSymbol: String)
-}
 
 public struct CleanTextField: View {
-    
-    @Environment(\.colorScheme) private var colorScheme
     
     @Binding var text : String
     @FocusState private var isFocused : Bool
@@ -46,7 +35,13 @@ public struct CleanTextField: View {
         ZStack {
             switch style {
             case .standard:
-                StandardTextField()
+                StandardInputField(text: $text,
+                                   isFocused: _isFocused,
+                                   placeholder: placeholder,
+                                   keyboard: keyboard,
+                                   color: color) {
+                    TextField((isFocused || !text.isEmpty) ? "" : placeholder, text: $text)
+                }
             case .line:
                 LineTextField()
             case .outline:
@@ -104,28 +99,7 @@ public struct CleanTextField: View {
     
 }
 
-private struct CleanTextFieldMod : ViewModifier {
-    
-    let keyboardType : UIKeyboardType
-    @FocusState var isFocused : Bool
-    
-    func body(content: Content) -> some View {
-        content
-            .keyboardType(keyboardType)
-            .focused($isFocused)
-            .onTapGesture {
-                withAnimation {
-                    isFocused.toggle()
-                }
-            }
-    }
-}
 
-private extension View {
-    func textFieldMod(keyboardType : UIKeyboardType, isFocused: FocusState<Bool>) -> some View {
-        modifier(CleanTextFieldMod(keyboardType: keyboardType, isFocused: isFocused))
-    }
-}
 
 private extension CleanTextField {
     
