@@ -30,31 +30,40 @@ struct CleanSecureField : View {
                                placeholder: placeholder,
                                keyboard: keyboard,
                                color: color) {
-                SecureFieldImp(text: $text, placeholder: (isFocused || !text.isEmpty) ? "" : placeholder, color: color)
+                SecureFieldImp(text: $text,
+                               placeholder: (isFocused || !text.isEmpty) ? "" : placeholder,
+                               color: color)
             }
         case .line:
-            StandardInputField(text: $text,
+            LineInputField(text: $text,
                                isFocused: _isFocused,
                                placeholder: placeholder,
                                keyboard: keyboard,
                                color: color) {
-                SecureFieldImp(text: $text, placeholder: (isFocused || !text.isEmpty) ? "" : placeholder, color: color)
+                SecureFieldImp(text: $text,
+                               placeholder: (isFocused || !text.isEmpty) ? "" : placeholder,
+                               color: color)
             }
         case .outline:
-            StandardInputField(text: $text,
+            OutlineInputField(text: $text,
                                isFocused: _isFocused,
                                placeholder: placeholder,
                                keyboard: keyboard,
                                color: color) {
-                SecureFieldImp(text: $text, placeholder: (isFocused || !text.isEmpty) ? "" : placeholder, color: color)
+                SecureFieldImp(text: $text,
+                               placeholder: (isFocused || !text.isEmpty) ? "" : placeholder,
+                               color: color)
             }
         case .symbol(let sfSymbol):
-            StandardInputField(text: $text,
+            SfSymbolInputField(text: $text,
                                isFocused: _isFocused,
                                placeholder: placeholder,
                                keyboard: keyboard,
-                               color: color) {
-                SecureFieldImp(text: $text, placeholder: (isFocused || !text.isEmpty) ? "" : placeholder, color: color)
+                               color: color,
+                               symbol: sfSymbol) {
+                SecureFieldImp(text: $text,
+                               placeholder: (isFocused || !text.isEmpty) ? "" : placeholder,
+                               color: color)
             }
         }
     }
