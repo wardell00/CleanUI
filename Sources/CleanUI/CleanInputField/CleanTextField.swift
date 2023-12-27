@@ -18,7 +18,7 @@ public struct CleanTextField: View {
     let style : CleanTextFieldStyle
     let keyboard : UIKeyboardType
     
-    init(text: Binding<String>,
+    public init(text: Binding<String>,
          placeholder: LocalizedStringKey,
          color: Color = .accentColor,
          style: CleanTextFieldStyle = .standard,

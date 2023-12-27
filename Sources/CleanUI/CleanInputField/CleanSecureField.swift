@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct CleanSecureField : View {
+public struct CleanSecureField : View {
     @Binding var text : String
     @FocusState private var isFocused : Bool
     
@@ -9,7 +9,7 @@ struct CleanSecureField : View {
     let style : CleanTextFieldStyle
     let keyboard : UIKeyboardType
     
-    init(text: Binding<String>,
+    public init(text: Binding<String>,
          placeholder: LocalizedStringKey,
          color: Color = .accentColor,
          style: CleanTextFieldStyle = .standard,
@@ -22,7 +22,7 @@ struct CleanSecureField : View {
         self.keyboard = keyboard
     }
     
-    var body: some View {
+    public var body: some View {
         switch style {
         case .standard:
             StandardInputField(text: $text,
