@@ -36,7 +36,7 @@ struct SecureFieldImp : View {
         }
     }
 }
-struct CleanTextFieldMod : ViewModifier {
+private struct CleanTextFieldMod : ViewModifier {
     
     let keyboardType : UIKeyboardType
     @FocusState var isFocused : Bool
@@ -51,7 +51,7 @@ struct CleanTextFieldMod : ViewModifier {
     }
 }
 
-extension View {
+private extension View {
     func textFieldMod(keyboardType : UIKeyboardType, isFocused: FocusState<Bool>) -> some View {
         modifier(CleanTextFieldMod(keyboardType: keyboardType, isFocused: isFocused))
     }
@@ -59,6 +59,7 @@ extension View {
 
 struct StandardInputField<Content: View> : View {
     
+    @Environment(\.colorScheme) private var colorScheme
     @Binding var text : String
     @FocusState var isFocused : Bool
     let placeholder: LocalizedStringKey
@@ -79,8 +80,8 @@ struct StandardInputField<Content: View> : View {
                 .padding()
                 .background {
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(isFocused ? color.opacity(0.08) : .clear)
-                        .stroke(isFocused ? color : .secondary,
+                        .fill(colorScheme == .dark ? Color(uiColor: UIColor.systemGray6) : .white)
+                        .stroke(isFocused ? color : Color(uiColor: UIColor.systemGray6),
                                 lineWidth: 2.0)
                 }
             
@@ -115,7 +116,7 @@ struct LineInputField<Content: View> : View {
         .background {
             ZStack(alignment: .bottom) {
                 RoundedRectangle(cornerRadius: 5)
-                    .fill(.tertiary)
+                    .fill(Color(uiColor: UIColor.systemGray6))
                 Divider()
                     .frame(height: (isFocused || !text.isEmpty) ? 5 : 2)
                     .overlay(color)
@@ -126,6 +127,7 @@ struct LineInputField<Content: View> : View {
 }
 
 struct OutlineInputField<Content: View> : View {
+
     @Binding var text : String
     @FocusState var isFocused : Bool
     let placeholder: LocalizedStringKey
@@ -146,7 +148,7 @@ struct OutlineInputField<Content: View> : View {
                             .stroke(color, lineWidth: 2.0)
                         Text(placeholder)
                             .padding(.horizontal)
-                            .background(Color.white)
+                            .background(Color(uiColor: UIColor.systemBackground))
                             .offset(x: 20.0, y: -11.0)
                             .foregroundStyle(color)
                     }
@@ -154,13 +156,14 @@ struct OutlineInputField<Content: View> : View {
                 else {
                     RoundedRectangle(cornerRadius: 10.0, style: .continuous)
                         .fill(.clear)
-                        .stroke(.secondary, lineWidth: 2.0)
+                        .stroke(Color(uiColor: UIColor.systemGray6), lineWidth: 2.0)
                 }
             }
     }
 }
 
 struct SfSymbolInputField<Content: View> : View {
+    @Environment(\.colorScheme) private var colorScheme
     @Binding var text : String
     @FocusState var isFocused : Bool
     let placeholder: LocalizedStringKey
@@ -172,8 +175,10 @@ struct SfSymbolInputField<Content: View> : View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(placeholder)
-                .padding(.leading, 10)
+            if isFocused || !text.isEmpty  {
+                Text(placeholder)
+                    .padding(.leading, 10)
+            }
             HStack {
                 Image(systemName: symbol)
                     .foregroundStyle(color)
@@ -184,8 +189,8 @@ struct SfSymbolInputField<Content: View> : View {
             .padding()
             .background {
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(isFocused ? color.opacity(0.08) : .clear)
-                    .stroke(isFocused ? color : .secondary,
+                    .fill(colorScheme == .dark ? Color(uiColor: UIColor.systemGray6) : .white)
+                    .stroke(isFocused ? color : Color(uiColor: UIColor.systemGray6),
                             lineWidth: 2.0)
             }
         }

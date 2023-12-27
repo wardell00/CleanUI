@@ -48,7 +48,7 @@ public struct CleanTextField: View {
                                placeholder: placeholder,
                                keyboard: keyboard,
                                color: color) {
-                    TextField(placeholder, text: $text, axis: .vertical)
+                    TextField((isFocused || !text.isEmpty) ? "" : placeholder, text: $text)
                 }
             case .outline:
                 OutlineInputField(text: $text,
