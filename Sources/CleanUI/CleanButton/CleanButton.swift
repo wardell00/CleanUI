@@ -173,26 +173,130 @@ public struct CleanButton: View {
 }
 
 #Preview {
-    VStack(spacing: 20) {
-        CleanButton(action: {},
-                    label: "Delete",
-                    labelColor: .white,
-                    backgroundColor: .red,
-                    icon: "trash",
-                    iconOnly: false,
-                    fullWidth: true,
-                    isDisabled: false)
-        CleanButton(action: {},
-                    label: "Delete",
-                    strokeColor: .red,
-                    icon: "trash",
-                    iconOnly: false,
-                    isDisabled: false)
-        
-        CleanButton(action: {},
-                    label: "Delete",
-                    labelColor: .red,
-                    isDisabled: false)
+    ScrollView {
+        VStack(spacing: 50) {
+            VStack(alignment: .leading) {
+                Text("Primary Button")
+                CleanButton(action: {},
+                            label: "Delete",
+                            labelColor: .white,
+                            backgroundColor: .red,
+                            icon: "trash",
+                            iconOnly: false,
+                            fullWidth: true,
+                            isDisabled: false)
+                CleanButton(action: {},
+                            label: "Delete",
+                            labelColor: .white,
+                            backgroundColor: .red,
+                            fullWidth: true,
+                            isDisabled: false)
+                HStack {
+                    Spacer()
+                    CleanButton(action: {},
+                                label: "Delete",
+                                labelColor: .white,
+                                backgroundColor: .red,
+                                icon: "trash",
+                                iconOnly: false,
+                                isDisabled: false)
+                    CleanButton(action: {},
+                                label: "Delete",
+                                labelColor: .white,
+                                backgroundColor: .red,
+                                isDisabled: false)
+                    CleanButton(action: {},
+                                label: "Delete",
+                                labelColor: .white,
+                                backgroundColor: .red,
+                                icon: "trash",
+                                iconOnly: true,
+                                isDisabled: false)
+                    Spacer()
+                }
+                CleanButton(action: {},
+                            label: "Delete",
+                            labelColor: .white,
+                            backgroundColor: .red,
+                            icon: "trash",
+                            iconOnly: false,
+                            fullWidth: true,
+                            isDisabled: true)
+            }
+            
+            VStack(alignment: .leading) {
+                Text("Secondary Button")
+                CleanButton(action: {},
+                            label: "Delete",
+                            strokeColor: .red,
+                            icon: "trash",
+                            iconOnly: false,
+                            fullWidth: true,
+                            isDisabled: false)
+                CleanButton(action: {},
+                            label: "Delete",
+                            strokeColor: .red,
+                            fullWidth: true,
+                            isDisabled: false)
+                HStack {
+                    Spacer()
+                    CleanButton(action: {},
+                                label: "Delete",
+                                strokeColor: .red,
+                                icon: "trash",
+                                iconOnly: false,
+                                isDisabled: false)
+                    CleanButton(action: {},
+                                label: "Delete",
+                                strokeColor: .red,
+                                isDisabled: false)
+                    CleanButton(action: {},
+                                label: "Delete",
+                                strokeColor: .red,
+                                icon: "trash",
+                                iconOnly: true,
+                                isDisabled: false)
+                    Spacer()
+                }
+                CleanButton(action: {},
+                            label: "Delete",
+                            strokeColor: .red,
+                            icon: "trash",
+                            iconOnly: false,
+                            fullWidth: true,
+                            isDisabled: true)
+            }
+            
+            
+            VStack(alignment: .leading) {
+                Text("Tertiary Button")
+                HStack(spacing: 20) {
+                    CleanButton(action: {},
+                                label: "Delete",
+                                labelColor: .red,
+                                isDisabled: false)
+                    CleanButton(action: {},
+                                label: "Delete",
+                                labelColor: .red,
+                                icon: "trash",
+                                iconOnly: false,
+                                isDisabled: false)
+                    CleanButton(action: {},
+                                label: "Delete",
+                                labelColor: .red,
+                                icon: "trash",
+                                iconOnly: true,
+                                isDisabled: false)
+                    CleanButton(action: {},
+                                label: "Delete",
+                                labelColor: .red,
+                                icon: "trash",
+                                iconOnly: false,
+                                isDisabled: true)
+                    Spacer()
+                }
+            }
+        }
+        .padding()
     }
-    .padding()
 }
