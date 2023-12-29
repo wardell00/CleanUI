@@ -8,6 +8,6 @@
 import Foundation
 
 @frozen
-public enum CleanButtonHierarchy {
-    case cleanButtonPrimary, cleanButtonSecondary, cleanButtontertiary
+public enum CleanButtonHierarchy: CaseIterable {
+    case primaryButton, secondaryButton, tertiaryButton
 }
