@@ -20,7 +20,7 @@ public struct CleanButton: View {
     let fullWidth: Bool
     let isDisabled : Bool
     
-    /// Init for primary Button
+    /// Init for primary button
     public init(action: @escaping () -> Void,
                 label: LocalizedStringKey,
                 labelColor : Color,
@@ -40,7 +40,7 @@ public struct CleanButton: View {
         self.fullWidth = fullWidth
         self.isDisabled = isDisabled
     }
-    /// Init for secondary Button
+    /// Init for secondary button
     public init(action: @escaping () -> Void,
                 label: LocalizedStringKey,
                 strokeColor : Color,
@@ -59,7 +59,7 @@ public struct CleanButton: View {
         self.fullWidth = fullWidth
         self.isDisabled = isDisabled
     }
-    /// Init for tertiary Button
+    /// Init for tertiary button
     public init(action: @escaping () -> Void,
                 label: LocalizedStringKey,
                 labelColor: Color,
@@ -77,7 +77,28 @@ public struct CleanButton: View {
         self.fullWidth = false
         self.isDisabled = isDisabled
     }
-
+    
+    /// Init for fully customzable button
+    public init(action: @escaping () -> Void,
+                label: LocalizedStringKey,
+                labelColor: Color,
+                backgroundColor: Color,
+                strokeColor: Color,
+                icon: String?,
+                iconOnly: Bool,
+                fullWidth: Bool,
+                isDisabled: Bool) {
+        self.action = action
+        self.label = label
+        self.labelColor = labelColor
+        self.backgroundColor = backgroundColor
+        self.strokeColor = strokeColor
+        self.icon = icon
+        self.iconOnly = iconOnly
+        self.buttonHierarchy = .fullyCustomizable
+        self.fullWidth = fullWidth
+        self.isDisabled = isDisabled
+    }
     
     public var body: some View {
         Button {
@@ -85,50 +106,22 @@ public struct CleanButton: View {
         } label: {
             switch buttonHierarchy {
             case .primaryButton:
-                if fullWidth {
-                    buttonLabel()
-                        .foregroundStyle(labelColor)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background {
-                            primaryBackground()
-                        }
-                }
-                else {
-                    buttonLabel()
-                        .foregroundStyle(labelColor)
-                        .padding()
-                        .background {
-                            primaryBackground()
-                        }
-                }
+                primaryButton()
             case .secondaryButton:
-                if fullWidth {
-                    buttonLabel()
-                        .foregroundStyle(isDisabled ? Color(uiColor: UIColor.systemGray3) : labelColor)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background {
-                            secondaryBackground()
-                        }
-                }
-                else {
-                    buttonLabel()
-                        .foregroundStyle(isDisabled ? Color(uiColor: UIColor.systemGray3) : labelColor)
-                        .padding()
-                        .background {
-                            secondaryBackground()
-                        }
-                }
+               secondaryButton()
             case .tertiaryButton:
-                buttonLabel()
-                    .foregroundStyle(isDisabled ? Color(uiColor: UIColor.systemGray3) : labelColor)
+                tertiaryButton()
+            case .fullyCustomizable:
+               fullyCustomizableButton()
             }
         }
         .disabled(isDisabled)
         
     }
     
+    var mainColor : Color {
+        return isDisabled ? Color(uiColor: UIColor.systemGray3) : (buttonHierarchy == .primaryButton ? backgroundColor : labelColor)
+    }
     @ViewBuilder
     private func buttonLabel() -> some View {
         if let icon {
@@ -149,11 +142,11 @@ public struct CleanButton: View {
     private func primaryBackground() -> some View {
         if iconOnly {
             Circle()
-                .fill(isDisabled ? Color(uiColor: UIColor.systemGray3) : backgroundColor)
+                .fill(mainColor)
         }
         else {
             RoundedRectangle(cornerRadius: 10)
-                .fill(isDisabled ? Color(uiColor: UIColor.systemGray3) : backgroundColor)
+                .fill(mainColor)
         }
     }
     
@@ -162,12 +155,85 @@ public struct CleanButton: View {
         if iconOnly {
             Circle()
                 .fill(.clear)
-                .stroke(isDisabled ? Color(uiColor: UIColor.systemGray3) : labelColor, lineWidth: 2.5)
+                .stroke(mainColor, lineWidth: 2.5)
         }
         else {
             RoundedRectangle(cornerRadius: 10)
                 .fill(.clear)
-                .stroke(isDisabled ? Color(uiColor: UIColor.systemGray3) : labelColor, lineWidth: 2.5)
+                .stroke(mainColor, lineWidth: 2.5)
+        }
+    }
+    
+    @ViewBuilder
+    private func primaryButton() -> some View {
+        if fullWidth {
+            buttonLabel()
+                .foregroundStyle(labelColor)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background {
+                    primaryBackground()
+                }
+        }
+        else {
+            buttonLabel()
+                .foregroundStyle(labelColor)
+                .padding()
+                .background {
+                    primaryBackground()
+                }
+        }
+    }
+    
+    @ViewBuilder
+    private func secondaryButton() -> some View {
+        if fullWidth {
+            buttonLabel()
+                .foregroundStyle(mainColor)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background {
+                    secondaryBackground()
+                }
+        }
+        else {
+            buttonLabel()
+                .foregroundStyle(mainColor)
+                .padding()
+                .background {
+                    secondaryBackground()
+                }
+        }
+    }
+    
+    @ViewBuilder
+    private func tertiaryButton() -> some View {
+        buttonLabel()
+            .foregroundStyle(mainColor)
+    }
+    
+    @ViewBuilder
+    private func fullyCustomizableButton() -> some View {
+        if fullWidth {
+            buttonLabel()
+                .foregroundStyle(labelColor)
+                .padding()
+                .frame(maxWidth: .infinity)
+                .background {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(isDisabled ? Color(uiColor: UIColor.systemGray3)  : backgroundColor)
+                        .stroke(isDisabled ? Color(uiColor: UIColor.systemGray3)  : strokeColor, lineWidth: 2.0)
+                }
+        }
+        else {
+            buttonLabel()
+                .foregroundStyle(labelColor)
+                .padding()
+                .background {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(isDisabled ? Color(uiColor: UIColor.systemGray3)  : backgroundColor)
+                        .stroke(isDisabled ? Color(uiColor: UIColor.systemGray3)  : strokeColor, lineWidth: 2.0)
+                }
         }
     }
 }
@@ -295,6 +361,37 @@ public struct CleanButton: View {
                                 isDisabled: true)
                     Spacer()
                 }
+            }
+            
+            VStack(alignment: .leading) {
+                Text("Fully Customizable Button")
+                CleanButton(action: {},
+                            label: "Delete",
+                            labelColor: .blue,
+                            backgroundColor: .purple,
+                            strokeColor: .red,
+                            icon: "trash",
+                            iconOnly: false,
+                            fullWidth: true,
+                            isDisabled: false)
+                CleanButton(action: {},
+                            label: "Delete",
+                            labelColor: .blue,
+                            backgroundColor: .purple,
+                            strokeColor: .red,
+                            icon: "trash",
+                            iconOnly: false,
+                            fullWidth: false,
+                            isDisabled: false)
+                CleanButton(action: {},
+                            label: "Delete",
+                            labelColor: .blue,
+                            backgroundColor: .purple,
+                            strokeColor: .red,
+                            icon: "trash",
+                            iconOnly: false,
+                            fullWidth: false,
+                            isDisabled: true)
             }
         }
         .padding()
