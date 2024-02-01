@@ -21,6 +21,24 @@ public struct CleanButton<LabelColor, ButtonColor, ButtonLabel>: View where Butt
     let isDisabled : Bool
     let label : ButtonLabel
     
+//    public init(cleanButtonStyle: CleanButtonStyle,
+//                cleanButtonBackgroundShape: CleanButtonBackgroundShape,
+//                labelColor: LabelColor,
+//                fillColor: ButtonColor,
+//                useFullWidth: Bool,
+//                isDisabled: Bool,
+//                label: @escaping () -> ButtonLabel,
+//                action: @escaping () -> Void) {
+//        self.cleanButtonStyle = cleanButtonStyle
+//        self.action = action
+//        self.labelColor = labelColor
+//        self.fillColor = fillColor
+//        self.useFullWidth = useFullWidth
+//        self.cleanButtonBackgroundShape = cleanButtonBackgroundShape
+//        self.isDisabled = isDisabled
+//        self.label = label()
+//    }
+    
     public var body: some View {
         Button { action() }
         label: {
@@ -73,19 +91,15 @@ public struct CleanButton<LabelColor, ButtonColor, ButtonLabel>: View where Butt
                         }
                     }
             case .plainText:
-                label
+                if isDisabled {
+                    label
+                        .foregroundStyle(Color(uiColor: .systemGray3))
+                }
+                else {
+                    label
+                        .foregroundStyle(labelColor)
+                }
             }
-//            switch cleanButtonStyle {
-//            case .solidButton, .ghostButton:
-//                Text(titleKey)
-//                    .modifier(CleanButtonViewModifier(labelColor: labelColor, fillColor: fillColor, useFullWidth: useFullWidth, cleanButtonStle: cleanButtonStyle, isDisabled: isDisabled))
-//            case .solidButtonSfImage, .ghostButtonSfImage:
-//                Label(titleKey, systemImage: sfImage)
-//                    .modifier(CleanButtonViewModifier(labelColor: labelColor, fillColor: fillColor, useFullWidth: useFullWidth, cleanButtonStle: cleanButtonStyle, isDisabled: isDisabled))
-//            case .solidButtonSfImageOnly(_), .ghostButtonSfImageOnly(_):
-//                Image(systemName: sfImage)
-//                    .modifier(CleanButtonViewModifier(labelColor: labelColor, fillColor: fillColor, useFullWidth: useFullWidth, cleanButtonStle: cleanButtonStyle, isDisabled: isDisabled))
-//            }
             
         }
         .disabled(isDisabled)

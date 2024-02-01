@@ -54,6 +54,18 @@ struct CleanButtonTesting: View {
                         CleanButton(sfImage: "checkmark", backgroundShape: .circle, strokeColor: .green, isDisabled: true, action: {})
                     }
                 }
+                
+                VStack(alignment: .leading) {
+                    Text("Plain Button")
+                        .font(.largeTitle)
+                    HStack {
+                        CleanButton(string, labelColor: .pink, isDisabled: false, action: {})
+                        CleanButton(localized, labelColor: .pink, isDisabled: false, action: {})
+                        CleanButton(localized, sfImage : "trash", labelColor: .pink, isDisabled: false, action: {})
+                        CleanButton(sfImage: "trash", labelColor: .red.gradient, isDisabled: false, action: {})
+                        CleanButton(sfImage: "trash", labelColor: .red.gradient, isDisabled: true, action: {})
+                    }
+                }
             }
         }
         
